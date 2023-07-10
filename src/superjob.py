@@ -1,4 +1,5 @@
 import requests
+import time
 from src.abstract_classes import JobParser
 from src.config import API_SECRET_KEY
 from http import HTTPStatus
@@ -11,10 +12,13 @@ class SuperJobAPI(JobParser):
         headers = {
             "X-Api-App-Id": API_SECRET_KEY
         }
-        params = {
-            "keyword": 'python',
-            "page": "1"
-        }
+        for page in range(10):
+            time.sleep(1)
+            params = {
+                "keyword": str(input()),
+                "page": page,
+                "per_page": "100"
+            }
         response = requests.get("https://api.superjob.ru/2.0/vacancies/",
                                 params=params,
                                 headers=headers)
